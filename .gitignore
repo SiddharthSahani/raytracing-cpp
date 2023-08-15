@@ -1,0 +1,11 @@
+
+.vscode
+
+# all the dependencies are here
+external/
+
+# executable
+*.exe
+
+# object files
+*/*.o
