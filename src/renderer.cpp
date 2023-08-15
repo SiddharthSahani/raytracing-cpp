@@ -60,7 +60,7 @@ void Renderer::render(float scale) {
 
 
 glm::vec3 Renderer::per_pixel(uint32_t x, uint32_t y) {
-    Ray ray = m_camera.get_ray(x / (float) m_size.x, y / (float) m_size.y);
+    Ray ray = m_camera.get_ray(x, y);
 
     glm::vec3 light = {0, 0, 0};
     glm::vec3 contribution = {1, 1, 1};
