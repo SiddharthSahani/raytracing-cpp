@@ -39,19 +39,19 @@ rt::Scene create_scene() {
         sphere.radius = 1.0;
         sphere.material_index = 2;
     }
-
+    
     return scene;
 }
 
 
 int main() {
-    const int screen_width = 1080;
-    const int screen_height = 720;
+    const int window_width = 1080;
+    const int window_height = 720;
     const float scale = 2.0f;
-    const int image_width = screen_width / scale;
-    const int image_height = screen_height / scale;
+    const int image_width = window_width / scale;
+    const int image_height = window_height / scale;
 
-    InitWindow(screen_width, screen_height, "Raytracing with c++");
+    InitWindow(window_width, window_height, "Raytracing with c++");
     SetTargetFPS(30);
 
     rt::Scene scene = create_scene();
@@ -69,6 +69,16 @@ int main() {
         renderer.update();
         renderer.reload();
         renderer.render(scale);
+
+        if (IsKeyDown(KEY_D)) {
+            // debug info
+            DrawText("Debug stuff", 10, window_height-150, 20, RED);
+            DrawText(TextFormat("  Window size : %d x %d", window_width, window_height), 10, window_height-120, 17, RED);
+            DrawText(TextFormat("  Renderer size : %d x %d", image_width, image_height), 10, window_height-100, 17, RED);
+            DrawText(TextFormat("  Scaling factor : %f", scale), 10, window_height-80, 17, RED);
+            DrawText(TextFormat("  Number of spheres : %d", scene.spheres.size()), 10, window_height-60, 17, RED);
+            DrawText(TextFormat("  Number of materials : %d", scene.materials.size()), 10, window_height-40, 17, RED);
+        }
 
         DrawFPS(10, 10);
         EndDrawing();
