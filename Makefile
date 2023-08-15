@@ -15,4 +15,4 @@ $(TARGET): main.cpp $(OBJ_FILES)
 	g++ -o $@ -c $< $(CXXFLAGS) $(INCLUDES)
 
 clean:
-	rm $(OBJ_FILES)
+	rm $(OBJ_FILES) $(TARGET)
