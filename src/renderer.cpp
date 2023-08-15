@@ -30,6 +30,7 @@ void Renderer::update() {
     uint32_t width = m_size.x;
     uint32_t height = m_size.y;
 
+    #pragma omp parallel for
     for (uint32_t y = 0; y < height; y++) {
         for (uint32_t x = 0; x < width; x++) {
             glm::vec3 color = per_pixel(x, y);
