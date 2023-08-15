@@ -47,7 +47,7 @@ rt::Scene create_scene() {
 int main() {
     const int screen_width = 1080;
     const int screen_height = 720;
-    const float scale = 3.0f;
+    const float scale = 2.0f;
     const int image_width = screen_width / scale;
     const int image_height = screen_height / scale;
 
