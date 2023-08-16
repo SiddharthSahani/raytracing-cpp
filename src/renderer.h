@@ -17,6 +17,7 @@ class Renderer {
         void update(); // update the pixels
         void reload(); // update the texture
         void render(float scale); // draw the underlying texture to the screen
+        void reset_frame_index(); // call this to start again
 
     private:
         glm::vec3 per_pixel(uint32_t x, uint32_t y); // returns the color at that position

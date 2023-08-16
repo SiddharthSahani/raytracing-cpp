@@ -70,7 +70,11 @@ int main() {
         renderer.reload();
         renderer.render(scale);
 
-        if (IsKeyDown(KEY_D)) {
+        if (camera.update(GetFrameTime())) {
+            renderer.reset_frame_index();
+        }
+
+        if (IsKeyDown(KEY_LEFT_CONTROL) && IsKeyDown(KEY_D)) {
             // debug info
             DrawText("Debug stuff", 10, window_height-150, 20, RED);
             DrawText(TextFormat("  Window size : %d x %d", window_width, window_height), 10, window_height-120, 17, RED);

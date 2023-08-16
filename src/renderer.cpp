@@ -40,8 +40,7 @@ void Renderer::update() {
             accumulated_color /= (float) m_frame_index;
             accumulated_color = glm::clamp(accumulated_color, glm::vec3(0.0f), glm::vec3(1.0f));
 
-            uint32_t pixel_position = (width-x-1) + (height-y-1) * width;
-            m_pixels[pixel_position] = utils::convert_to_rgba(accumulated_color);
+            m_pixels[x + (height-y-1)*width] = utils::convert_to_rgba(accumulated_color);
         }
     }
 
@@ -56,6 +55,11 @@ void Renderer::reload() {
 
 void Renderer::render(float scale) {
     DrawTextureEx(m_texture, {0, 0}, 0.0f, scale, WHITE);
+}
+
+
+void Renderer::reset_frame_index() {
+    m_frame_index = 1;
 }
 
 
