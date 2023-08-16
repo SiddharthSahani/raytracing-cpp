@@ -51,6 +51,7 @@ int main() {
     const int image_width = window_width / scale;
     const int image_height = window_height / scale;
 
+    SetTraceLogLevel(LOG_NONE);
     InitWindow(window_width, window_height, "Raytracing with c++");
     SetTargetFPS(30);
 
