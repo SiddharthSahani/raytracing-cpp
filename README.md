@@ -24,7 +24,12 @@ This project was inspired by
 3. That's it
 
 ## Features and future plans
-- [X] Explore the scene by using wasd while holding right mouse button
+- [X] Exploring the scene
 - [ ] Add different types of geometries
 - [ ] A standalone version for a single frame (outputs a image)
 - [ ] Load scenes from json
+
+---
+#### What you can do with the executable
+- Move the camera using the standard wasd keys while holding right mouse button
+- Switch between the (as of now 2) test scenes by pressing KEY_C + 1,2 etc (ofcourse you can create your own as well)
