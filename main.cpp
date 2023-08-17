@@ -1,5 +1,6 @@
 
 #include "src/renderer.h"
+#include "src/sphere.h"
 #include <raylib.h>
 
 
@@ -22,22 +23,22 @@ rt::Scene create_scene() {
 
     // creating spheres
     {
-        rt::Sphere& sphere = scene.spheres.emplace_back();
-        sphere.position = {0.0, 0.0, 0.0};
-        sphere.radius = 1.0;
-        sphere.material_index = 0;
+        glm::vec3 position = {0.0, 0.0, 0.0};
+        float radius = 1.0;
+        int material_index = 0;
+        scene.spheres.emplace_back(new rt::Sphere(position, radius, material_index));
     }
     {
-        rt::Sphere& sphere = scene.spheres.emplace_back();
-        sphere.position = {0.0, -101.0, 0.0};
-        sphere.radius = 100.0;
-        sphere.material_index = 1;
+        glm::vec3 position = {0.0, -101.0, 0.0};
+        float radius = 100.0;
+        int material_index = 1;
+        scene.spheres.emplace_back(new rt::Sphere(position, radius, material_index));
     }
     {
-        rt::Sphere& sphere = scene.spheres.emplace_back();
-        sphere.position = {2.0, 0.0, 0.0};
-        sphere.radius = 1.0;
-        sphere.material_index = 2;
+        glm::vec3 position = {2.0, 0.0, 0.0};
+        float radius = 1.0;
+        int material_index = 2;
+        scene.spheres.emplace_back(new rt::Sphere(position, radius, material_index));
     }
     
     return scene;

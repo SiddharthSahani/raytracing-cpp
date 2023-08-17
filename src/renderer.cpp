@@ -79,8 +79,8 @@ glm::vec3 Renderer::per_pixel(uint32_t x, uint32_t y) {
             break;
         }
 
-        const Sphere& sphere = m_scene.spheres[payload.object_index];
-        const Material& material = m_scene.materials[sphere.material_index];
+        const auto& sphere = m_scene.spheres[payload.object_index];
+        const Material& material = m_scene.materials[sphere->get_material_index()];
 
         contribution *= material.albedo;
 
@@ -93,45 +93,14 @@ glm::vec3 Renderer::per_pixel(uint32_t x, uint32_t y) {
 
 
 HitPayload Renderer::trace_ray(const Ray& ray) {
-    int closest_sphere = -1;
-    float hit_distance = FLT_MAX;
-    for (int i = 0; i < m_scene.spheres.size(); i++) {
-        const Sphere& sphere = m_scene.spheres[i];
-
-        // shifting the origin
-        glm::vec3 origin = ray.origin - sphere.position;
-
-        float a = glm::dot(ray.direction, ray.direction);
-        float b = 2.0f * glm::dot(origin, ray.direction);
-        float c = glm::dot(origin, origin) - sphere.radius * sphere.radius;
-
-        float discriminant = b * b - 4 * a * c;
-        if (discriminant < 0.0f) {
-            // no solution to the quadtratic equation
-            continue;
-        }
-
-        float t = (-b - glm::sqrt(discriminant)) / (2.0f * a);
-        if (t > 0.0f && t < hit_distance) {
-            // this sphere is closer
-            hit_distance = t;
-            closest_sphere = i;
-        }
-    }
-
     HitPayload payload;
-    payload.hit_distance = hit_distance;
+    payload.hit_distance = FLT_MAX;
 
-    if (payload.hit_distance != FLT_MAX) {
-        // the object did hit something
-        const Sphere& sphere = m_scene.spheres[closest_sphere];
-        glm::vec3 origin = ray.origin - sphere.position;
-
-        payload.world_position = origin + ray.direction * payload.hit_distance;
-        payload.world_normal = glm::normalize(payload.world_position);
-        // unshifting the origin
-        payload.world_position += sphere.position;
-        payload.object_index = closest_sphere;
+    for (uint32_t i = 0; i < m_scene.spheres.size(); i++) {
+        const auto& sphere = m_scene.spheres[i];
+        if (sphere->hit(ray, payload)) {
+            payload.object_index = i;
+        }
     }
 
     return payload;

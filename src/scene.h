@@ -2,15 +2,16 @@
 #pragma once
 
 #include "src/material.h"
-#include "src/sphere.h"
+#include "src/baseobject.h"
 #include <vector>
+#include <memory>
 
 
 namespace rt {
 
 struct Scene {
     std::vector<Material> materials;
-    std::vector<Sphere> spheres;
+    std::vector<std::shared_ptr<Object>> spheres;
 };
 
 }
