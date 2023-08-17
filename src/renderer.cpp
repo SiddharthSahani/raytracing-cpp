@@ -79,8 +79,8 @@ glm::vec3 Renderer::per_pixel(uint32_t x, uint32_t y) {
             break;
         }
 
-        const auto& sphere = m_scene.spheres[payload.object_index];
-        const Material& material = m_scene.materials[sphere->get_material_index()];
+        const auto& object = m_scene.objects[payload.object_index];
+        const Material& material = m_scene.materials[object->get_material_index()];
 
         contribution *= material.albedo;
 
@@ -96,9 +96,9 @@ HitPayload Renderer::trace_ray(const Ray& ray) {
     HitPayload payload;
     payload.hit_distance = FLT_MAX;
 
-    for (uint32_t i = 0; i < m_scene.spheres.size(); i++) {
-        const auto& sphere = m_scene.spheres[i];
-        if (sphere->hit(ray, payload)) {
+    for (uint32_t i = 0; i < m_scene.objects.size(); i++) {
+        const auto& object = m_scene.objects[i];
+        if (object->hit(ray, payload)) {
             payload.object_index = i;
         }
     }

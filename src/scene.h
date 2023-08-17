@@ -11,7 +11,7 @@ namespace rt {
 
 struct Scene {
     std::vector<Material> materials;
-    std::vector<std::shared_ptr<Object>> spheres;
+    std::vector<std::shared_ptr<Object>> objects;
 };
 
 }

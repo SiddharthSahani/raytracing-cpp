@@ -6,7 +6,6 @@
 
 rt::Scene create_test_scene_1() {
     rt::Scene scene;
-
     // creating materials
     {
         rt::Material& material = scene.materials.emplace_back();
@@ -21,24 +20,24 @@ rt::Scene create_test_scene_1() {
         material.albedo = {0.8, 0.5, 0.2};
     }
 
-    // creating spheres
+    // creating objects
     {
         glm::vec3 position = {0.0, 0.0, 0.0};
         float radius = 1.0;
         int material_index = 0;
-        scene.spheres.emplace_back(new rt::Sphere(position, radius, material_index));
+        scene.objects.emplace_back(new rt::Sphere(position, radius, material_index));
     }
     {
         glm::vec3 position = {0.0, -101.0, 0.0};
         float radius = 100.0;
         int material_index = 1;
-        scene.spheres.emplace_back(new rt::Sphere(position, radius, material_index));
+        scene.objects.emplace_back(new rt::Sphere(position, radius, material_index));
     }
     {
         glm::vec3 position = {2.0, 0.0, 0.0};
         float radius = 1.0;
         int material_index = 2;
-        scene.spheres.emplace_back(new rt::Sphere(position, radius, material_index));
+        scene.objects.emplace_back(new rt::Sphere(position, radius, material_index));
     }
     
     return scene;
@@ -56,18 +55,18 @@ rt::Scene create_test_scene_2() {
         rt::Material& material = scene.materials.emplace_back();
         material.albedo = {0.2, 0.6, 0.0};
     }
-    // creating spheres
+    // creating objects
     {
         glm::vec3 position = {0.0, 0.0, 0.0};
         float radius = 1.0;
         int material_index = 0;
-        scene.spheres.emplace_back(new rt::Sphere(position, radius, material_index));
+        scene.objects.emplace_back(new rt::Sphere(position, radius, material_index));
     }
     {
         glm::vec3 position = {0.0, -101.0, 0.0};
         float radius = 100.0;
         int material_index = 1;
-        scene.spheres.emplace_back(new rt::Sphere(position, radius, material_index));
+        scene.objects.emplace_back(new rt::Sphere(position, radius, material_index));
     }
 
     return scene;
@@ -99,6 +98,7 @@ int main() {
         create_test_scene_1(),
         create_test_scene_2(),
     };
+    int num_of_test_scenes = sizeof(test_scenes) / sizeof(rt::Scene);
 
     rt::Scene test_scene = test_scenes[current_scene_index];
 
@@ -121,7 +121,7 @@ int main() {
         }
 
         int new_scene_index = check_if_scene_changed();
-        if (new_scene_index != -1 && current_scene_index != new_scene_index) {
+        if (new_scene_index != -1 && new_scene_index < num_of_test_scenes && current_scene_index != new_scene_index) {
             current_scene_index = new_scene_index;
             test_scene = test_scenes[current_scene_index];
             renderer.reset_frame_index();
@@ -133,7 +133,7 @@ int main() {
             DrawText(TextFormat("  Window size : %d x %d", window_width, window_height), 10, window_height-120, 17, RED);
             DrawText(TextFormat("  Renderer size : %d x %d", image_width, image_height), 10, window_height-100, 17, RED);
             DrawText(TextFormat("  Scaling factor : %f", scale), 10, window_height-80, 17, RED);
-            DrawText(TextFormat("  Number of spheres : %d", test_scene.spheres.size()), 10, window_height-60, 17, RED);
+            DrawText(TextFormat("  Number of objects : %d", test_scene.objects.size()), 10, window_height-60, 17, RED);
             DrawText(TextFormat("  Number of materials : %d", test_scene.materials.size()), 10, window_height-40, 17, RED);
         }
 
