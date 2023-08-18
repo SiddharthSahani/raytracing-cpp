@@ -19,7 +19,6 @@ rt::Scene create_test_scene_1() {
         rt::Material& material = scene.materials.emplace_back();
         material.albedo = {0.8, 0.5, 0.2};
     }
-
     // creating objects
     {
         glm::vec3 position = {0.0, 0.0, 0.0};
@@ -40,6 +39,8 @@ rt::Scene create_test_scene_1() {
         scene.objects.emplace_back(new rt::Sphere(position, radius, material_index));
     }
     
+    scene.sky_color = {230, 230, 250};
+    scene.sky_color /= 255.0f;
     return scene;
 }
 
@@ -68,7 +69,9 @@ rt::Scene create_test_scene_2() {
         int material_index = 1;
         scene.objects.emplace_back(new rt::Sphere(position, radius, material_index));
     }
-
+    
+    scene.sky_color = {104, 184, 235};
+    scene.sky_color /= 255.0f;
     return scene;
 }
 

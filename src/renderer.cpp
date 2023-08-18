@@ -74,8 +74,7 @@ glm::vec3 Renderer::per_pixel(uint32_t x, uint32_t y) {
         HitPayload payload = trace_ray(ray);
 
         if (payload.hit_distance == FLT_MAX) {
-            glm::vec3 sky_color = {0.6, 0.7, 0.9};
-            light += sky_color * contribution;
+            light += m_scene.sky_color * contribution;
             break;
         }
 
