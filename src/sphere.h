@@ -2,7 +2,6 @@
 #pragma once
 
 #include "src/baseobject.h"
-#include <glm/glm.hpp>
 
 
 namespace rt {
