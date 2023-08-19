@@ -33,3 +33,8 @@ This project was inspired by
 #### What you can do with the executable
 - Move the camera using the standard wasd keys while holding right mouse button
 - Switch between the (as of now 2) test scenes by pressing KEY_C + 1,2 etc (ofcourse you can create your own as well)
+
+---
+#### Screenshots
+![test scene 1](screenshots/test-scene-1.png)
+![test scene 2](screenshots/test-scene-2.png)

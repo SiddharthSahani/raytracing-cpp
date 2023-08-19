@@ -86,7 +86,7 @@ rt::Scene create_test_scene_2() {
         scene.objects.emplace_back(new rt::Sphere(position, radius, material_index));
     }
     {
-        const float size = 3;
+        const float size = 2;
 		glm::vec3 v0 = {-size, -1,  size};
 		glm::vec3 v1 = {-size, -1, -size};
 		glm::vec3 v2 = { size, -0.5, -size};
