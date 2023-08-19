@@ -27,11 +27,12 @@ float random_float() {
 }
 
 
-glm::vec3 random_vec3() {
+glm::vec3 random_vec3_in_unit_sphere() {
     float x = random_float();
     float y = random_float();
     float z = random_float();
-    return {x, y, z};
+    glm::vec3 vec = {x, y, z};
+    return glm::normalize(vec);
 }
 
 }

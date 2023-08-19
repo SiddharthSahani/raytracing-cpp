@@ -63,6 +63,11 @@ void Renderer::reset_frame_index() {
 }
 
 
+uint32_t Renderer::get_frame_index() const {
+    return m_frame_index;
+}
+
+
 glm::vec3 Renderer::per_pixel(uint32_t x, uint32_t y) {
     Ray ray = m_camera.get_ray(x, y);
 
@@ -84,7 +89,7 @@ glm::vec3 Renderer::per_pixel(uint32_t x, uint32_t y) {
         contribution *= material.albedo;
 
         ray.origin = payload.world_position + payload.world_normal * 0.0001f; // small bias so the ray doesnt start exactly at the surface
-        ray.direction = glm::normalize(payload.world_normal + utils::random_vec3()); // new random direction
+        ray.direction = glm::normalize(payload.world_normal + utils::random_vec3_in_unit_sphere()); // new random direction
     }
 
     return light;

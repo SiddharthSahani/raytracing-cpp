@@ -158,7 +158,8 @@ int main() {
 
         if (IsKeyDown(KEY_LEFT_CONTROL) && IsKeyDown(KEY_D)) {
             // debug info
-            DrawText("Debug stuff", 10, window_height-150, 20, RED);
+            DrawText("Debug stuff", 10, window_height-170, 20, RED);
+            DrawText(TextFormat("  Frame index: %d", renderer.get_frame_index()), 10, window_height-140, 17, RED);
             DrawText(TextFormat("  Window size : %d x %d", window_width, window_height), 10, window_height-120, 17, RED);
             DrawText(TextFormat("  Renderer size : %d x %d", image_width, image_height), 10, window_height-100, 17, RED);
             DrawText(TextFormat("  Scaling factor : %f", scale), 10, window_height-80, 17, RED);
