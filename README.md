@@ -25,7 +25,7 @@ This project was inspired by
 
 ## Features and future plans
 - [X] Exploring the scene
-- [ ] Add different types of geometries
+- [X] Add different types of geometries (spheres, triangles)
 - [ ] A standalone version for a single frame (outputs a image)
 - [ ] Load scenes from json
 
