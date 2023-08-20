@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include "src/baseobject.h"
+#include "src/geometries/baseobject.h"
 #include <glm/gtx/intersect.hpp>
 
 

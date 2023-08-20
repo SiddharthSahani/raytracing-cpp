@@ -2,7 +2,7 @@
 #pragma once
 
 #include "src/material.h"
-#include "src/baseobject.h"
+#include "src/geometries/baseobject.h"
 #include <vector>
 #include <memory>
 

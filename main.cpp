@@ -1,7 +1,6 @@
 
 #include "src/renderer.h"
-#include "src/sphere.h"
-#include "src/triangle.h"
+#include "src/geometries/all_geometries.h"
 #include <raylib.h>
 
 
@@ -104,8 +103,8 @@ rt::Scene create_test_scene_2() {
 
 int check_if_scene_changed() {
     if (IsKeyDown(KEY_C)) {
-        if (IsKeyPressed(KEY_ONE)) { return 0; }
-        if (IsKeyPressed(KEY_TWO)) { return 1; }
+        if (IsKeyPressed(KEY_ONE))   { return 0; }
+        if (IsKeyPressed(KEY_TWO))   { return 1; }
     }
     return -1;
 }
