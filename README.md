@@ -9,6 +9,7 @@ This project was inspired by
 ## Dependencies
 - [raylib](https://www.raylib.com) easy to use graphics library
 - [glm](https://github.com/g-truc/glm) mathematics library
+- [stb_image_write.h](https://github.com/nothings/stb/blob/master/stb_image_write.h) saving pixels to disk
 
 
 ## Getting started
@@ -26,7 +27,7 @@ This project was inspired by
 ## Features and future plans
 - [X] Exploring the scene
 - [X] Add different types of geometries (spheres, triangles)
-- [ ] A standalone version for a single frame (outputs a image)
+- [ ] A standalone version for a single frame (outputs an image) [Partially implemented]
 - [ ] Load scenes from json
 
 ---

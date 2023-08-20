@@ -1,6 +1,7 @@
 
 #include "src/renderer.h"
 #include "src/utils.h"
+#include <external/stb_image_write.h>
 #include <cstring> // memset
 
 
@@ -65,6 +66,11 @@ void Renderer::reset_frame_index() {
 
 uint32_t Renderer::get_frame_index() const {
     return m_frame_index;
+}
+
+
+bool Renderer::save_to_file(const char* filepath) const {
+    return stbi_write_png(filepath, m_size.x, m_size.y, 4, &m_pixels[0], m_size.x*4);
 }
 
 

@@ -19,6 +19,7 @@ class Renderer {
         void render(float scale); // draw the underlying texture to the screen
         void reset_frame_index(); // call this to start again
         uint32_t get_frame_index() const;
+        bool save_to_file(const char* filepath) const; // saves the output as an image returns true if successfully saved
 
     private:
         glm::vec3 per_pixel(uint32_t x, uint32_t y); // returns the color at that position
