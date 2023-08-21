@@ -64,7 +64,8 @@ bool Camera::update(float timestep) {
 
     bool moved = false;
 
-    glm::vec3 right_direction = glm::cross(m_direction, {0, 1, 0}); // for left and right
+    glm::vec3 up_direction = {0, 1, 0};
+    glm::vec3 right_direction = glm::cross(m_direction, up_direction);
 
     // w-a-s-d keys
     if (IsKeyDown(KEY_W)) {
@@ -81,6 +82,14 @@ bool Camera::update(float timestep) {
     }
     if (IsKeyDown(KEY_D)) {
         m_position += right_direction * speed * timestep;
+        moved = true;
+    }
+    if (IsKeyDown(KEY_Q)) {
+        m_position += up_direction * speed * timestep;
+        moved = true;
+    }
+    if (IsKeyDown(KEY_E)) {
+        m_position -= up_direction * speed * timestep;
         moved = true;
     }
 

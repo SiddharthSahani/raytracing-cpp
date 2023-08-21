@@ -32,7 +32,7 @@ This project was inspired by
 
 ---
 #### What you can do with the executable
-- Move the camera using the standard wasd keys while holding right mouse button
+- Move the camera using the standard wasd keys and use q,e keys to move in the 3d plane while holding right mouse button
 - Switch between the (as of now 2) test scenes by pressing KEY_C + 1,2 etc (ofcourse you can create your own as well)
 
 ---
