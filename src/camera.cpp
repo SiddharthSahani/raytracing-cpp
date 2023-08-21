@@ -44,19 +44,19 @@ bool Camera::update(float timestep) {
     const float speed = 5.0f;
     const float rotation_speed = 2.0f;
 
-    static bool is_rmb = false; // CHANGE NAME
+    static bool rmb_toggle_flag = false; // rmb: right mouse button
 
     auto _delta = GetMouseDelta();
     glm::vec2 delta = {_delta.x*sensitivity, _delta.y*sensitivity};
 
-    if (IsMouseButtonDown(MOUSE_RIGHT_BUTTON)) {
-        is_rmb = true;
+    if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT)) {
+        rmb_toggle_flag = true;
         DisableCursor();
     }
 
     if (!IsMouseButtonDown(MOUSE_BUTTON_RIGHT)) {
-        if (is_rmb) {
-            is_rmb = false;
+        if (rmb_toggle_flag) {
+            rmb_toggle_flag = false;
             EnableCursor();
         }
         return false;
@@ -67,7 +67,6 @@ bool Camera::update(float timestep) {
     glm::vec3 up_direction = {0, 1, 0};
     glm::vec3 right_direction = glm::cross(m_direction, up_direction);
 
-    // w-a-s-d keys
     if (IsKeyDown(KEY_W)) {
         m_position += m_direction * speed * timestep;
         moved = true;
@@ -100,7 +99,7 @@ bool Camera::update(float timestep) {
 
         glm::quat q = glm::normalize(glm::cross(
             glm::angleAxis(-pitch_delta, right_direction),
-            glm::angleAxis(-yaw_delta, glm::vec3(0, 1, 0))
+            glm::angleAxis(-yaw_delta, up_direction)
         ));
 
         m_direction = glm::rotate(q, m_direction);
@@ -111,7 +110,7 @@ bool Camera::update(float timestep) {
     if (moved) {
         // recalculating inverse view
         m_inv_view = glm::inverse(glm::lookAt(
-            m_position, m_position + m_direction, glm::vec3(0, 1, 0)
+            m_position, m_position + m_direction, up_direction
         ));
         // caching rays
         for (uint32_t x = 0; x < m_size.x; x++) {
