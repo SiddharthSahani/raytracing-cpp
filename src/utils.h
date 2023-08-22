@@ -2,7 +2,6 @@
 #pragma once
 
 #include <glm/glm.hpp>
-#include <random>
 
 
 namespace utils {
@@ -19,20 +18,25 @@ uint32_t convert_to_rgba(const glm::vec3& color) {
 }
 
 
-float random_float() {
-    static std::random_device rd;
-    static std::mt19937 mt(rd());
-    static std::uniform_real_distribution<float> dist(-1.0f, 1.0f);
-    return dist(mt);
+uint32_t pcg_hash(uint32_t input) {
+    uint32_t state = input * 747796405u + 2891336453u;
+    uint32_t word = ((state >> ((state >> 28u) + 4u)) ^ state) * 277803737u;
+    return (word >> 22u) ^ word;
 }
 
 
-glm::vec3 random_vec3_in_unit_sphere() {
-    float x = random_float();
-    float y = random_float();
-    float z = random_float();
+float random_float(uint32_t& seed) {
+    seed = pcg_hash(seed);
+    return (float) seed / UINT32_MAX;
+}
+
+
+glm::vec3 random_vec3_in_unit_sphere(uint32_t& seed) {
+    float x = random_float(seed);
+    float y = random_float(seed);
+    float z = random_float(seed);
     glm::vec3 vec = {x, y, z};
-    return glm::normalize(vec);
+    return glm::normalize(vec * 2.0f - 1.0f);
 }
 
 }
