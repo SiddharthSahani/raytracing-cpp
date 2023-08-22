@@ -1,6 +1,9 @@
 
 #include "src/renderer.h"
 #include "src/utils.h"
+#ifdef RT_NO_RAYLIB
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#endif
 #include <external/stb_image_write.h>
 #include <cstring> // memset
 
@@ -11,25 +14,41 @@ Renderer::Renderer(const glm::ivec2& size, const Scene& scene, const Camera& cam
 : m_size(size), m_scene(scene), m_camera(camera) {
     m_pixels.resize(size.x * size.y);
     m_accumulation_data.resize(size.x * size.y);
+    memset(&m_accumulation_data[0], 0, m_size.x*m_size.y * sizeof(glm::vec3));
 
+#ifndef RT_NO_RAYLIB
     Image temp = GenImageColor(size.x, size.y, RED);
     m_texture = LoadTextureFromImage(temp);
     UnloadImage(temp);
+#endif
+
 }
 
+
+#ifndef RT_NO_RAYLIB
 
 Renderer::~Renderer() {
     UnloadTexture(m_texture);
 }
 
+#endif
 
+
+#ifdef RT_NO_RAYLIB
+void Renderer::update(uint32_t frame_count) {
+#else
 void Renderer::update() {
     if (m_frame_index == 1) {
         memset(&m_accumulation_data[0], 0, m_size.x*m_size.y * sizeof(glm::vec3));
     }
+#endif
 
     uint32_t width = m_size.x;
     uint32_t height = m_size.y;
+
+#ifdef RT_NO_RAYLIB
+    for (uint32_t i = 0; i < frame_count; i++) {
+#endif
 
     #pragma omp parallel for
     for (uint32_t y = 0; y < height; y++) {
@@ -37,17 +56,24 @@ void Renderer::update() {
             glm::vec3 color = per_pixel(x, y);
             m_accumulation_data[x + y*width] += color;
 
+#ifndef RT_NO_RAYLIB
             glm::vec3 accumulated_color = m_accumulation_data[x + y*width];
             accumulated_color /= (float) m_frame_index;
             accumulated_color = glm::clamp(accumulated_color, glm::vec3(0.0f), glm::vec3(1.0f));
 
             m_pixels[x + (height-y-1)*width] = utils::convert_to_rgba(accumulated_color);
+#endif
         }
     }
 
     m_frame_index++;
+
+#ifdef RT_NO_RAYLIB
+    }
+#endif
 }
 
+#ifndef RT_NO_RAYLIB
 
 void Renderer::reload() {
     UpdateTexture(m_texture, &m_pixels[0]);
@@ -68,8 +94,31 @@ uint32_t Renderer::get_frame_index() const {
     return m_frame_index;
 }
 
+#endif
 
-bool Renderer::save_to_file(const char* filepath) const {
+
+const uint32_t* Renderer::get_pixels() const {
+    return m_pixels.data();
+}
+
+
+bool Renderer::save_to_file(const char* filepath) {
+
+#ifdef RT_NO_RAYLIB
+    uint32_t width = m_size.x;
+    uint32_t height = m_size.y;
+
+    for (uint32_t y = 0; y < height; y++) {
+        for (uint32_t x = 0; x < width; x++) {
+            glm::vec3 accumulated_color = m_accumulation_data[x + y*width];
+            accumulated_color /= (float) m_frame_index;
+            accumulated_color = glm::clamp(accumulated_color, glm::vec3(0.0f), glm::vec3(1.0f));
+
+            m_pixels[x + (height-y-1)*width] = utils::convert_to_rgba(accumulated_color);   
+        }
+    }
+#endif
+
     return stbi_write_png(filepath, m_size.x, m_size.y, 4, &m_pixels[0], m_size.x*4);
 }
 

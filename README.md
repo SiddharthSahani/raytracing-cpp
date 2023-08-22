@@ -27,8 +27,13 @@ This project was inspired by
 ## Features and future plans
 - [X] Exploring the scene
 - [X] Add different types of geometries (spheres, triangles)
-- [ ] A standalone version for a single frame (outputs an image) [Partially implemented]
+- [X] A standalone version for a single frame (outputs an image)
 - [ ] Load scenes from json
+
+---
+#### Compiling without raylib
+- Will output an image
+- Go to `Makefile` and change the line `USING_RAYLIB = y` to `USING_RAYLIB = n`
 
 ---
 #### What you can do with the executable

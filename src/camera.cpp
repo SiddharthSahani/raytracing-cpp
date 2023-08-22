@@ -2,7 +2,9 @@
 #include "src/camera.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/quaternion.hpp>
+#ifndef RT_NO_RAYLIB
 #include <raylib.h>
+#endif
 
 
 namespace rt {
@@ -38,6 +40,8 @@ Ray Camera::get_ray(uint32_t x, uint32_t y) const {
     return m_rays[x + y*m_size.x];
 }
 
+
+#ifndef RT_NO_RAYLIB
 
 bool Camera::update(float timestep) {
     const float sensitivity = 0.002f;
@@ -127,5 +131,7 @@ bool Camera::update(float timestep) {
 
     return moved;
 }
+
+#endif
 
 }

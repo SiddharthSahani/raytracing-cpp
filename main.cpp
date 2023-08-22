@@ -1,7 +1,9 @@
 
 #include "src/renderer.h"
 #include "src/geometries/all_geometries.h"
+#ifndef RT_NO_RAYLIB
 #include <raylib.h>
+#endif
 
 
 rt::Scene create_test_scene_1() {
@@ -101,6 +103,7 @@ rt::Scene create_test_scene_2() {
 }
 
 
+#ifndef RT_NO_RAYLIB
 int check_if_scene_changed() {
     if (IsKeyDown(KEY_C)) {
         if (IsKeyPressed(KEY_ONE))   { return 0; }
@@ -108,6 +111,7 @@ int check_if_scene_changed() {
     }
     return -1;
 }
+#endif
 
 
 int main() {
@@ -117,10 +121,12 @@ int main() {
     const int image_width = window_width / scale;
     const int image_height = window_height / scale;
 
+#ifndef RT_NO_RAYLIB
     SetTraceLogLevel(LOG_NONE);
     InitWindow(window_width, window_height, "Raytracing with c++");
     SetTargetFPS(30);
 
+#endif
     int current_scene_index = 0;
     rt::Scene test_scenes[] = {
         create_test_scene_1(),
@@ -136,6 +142,12 @@ int main() {
 
     rt::Renderer renderer({image_width, image_height}, test_scene, camera);
 
+#ifdef RT_NO_RAYLIB
+    renderer.update(300);
+    renderer.save_to_file("output.png");
+#endif
+
+#ifndef RT_NO_RAYLIB
     while (!WindowShouldClose()) {
         BeginDrawing();
         ClearBackground(RAYWHITE);
@@ -171,4 +183,6 @@ int main() {
     }
 
     CloseWindow();
+#endif
+
 }
