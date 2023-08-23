@@ -19,7 +19,7 @@ This project was inspired by
 
 2. From the project directory just run `make`
     ```cmd
-    > make
+    > make STANDALONE=n
     ```
 
 3. That's it
@@ -33,7 +33,10 @@ This project was inspired by
 ---
 #### Compiling without raylib
 - Will output an image
-- Go to `Makefile` and change the line `USING_RAYLIB = y` to `USING_RAYLIB = n`
+- In terminal, instead of `STANDALONE=n` do
+    ```cmd
+    > make STANDALONE=y
+    ```
 
 ---
 #### What you can do with the executable

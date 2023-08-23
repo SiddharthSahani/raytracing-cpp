@@ -1,7 +1,4 @@
 
-# y / n
-USING_RAYLIB = y
-
 CXXFLAGS = -O2 -fopenmp
 INCLUDES = -I . -I external/ -I external/raylib/include
 
@@ -11,12 +8,12 @@ OBJ_FILES = $(SRC_FILES:.cpp=.o)
 TARGET = main.exe
 
 
-ifeq ($(USING_RAYLIB), y)
-	LDFLAGS = -L external/raylib/lib -lraylib -lopengl32 -lgdi32 -lwinmm
-	DEFINES = 
-else
+ifeq ($(STANDALONE), y)
 	LDFLAGS = 
 	DEFINES = -DRT_NO_RAYLIB
+else
+	LDFLAGS = -L external/raylib/lib -lraylib -lopengl32 -lgdi32 -lwinmm
+	DEFINES = 
 endif
 
 
