@@ -9,20 +9,19 @@ namespace rt {
 class Sphere : public Object {
 
     public:
-        Sphere(const glm::vec3& position, float radius, int material_index);
+        Sphere(const glm::vec3& position, float radius, const std::shared_ptr<Material>& material);
         bool hit(const Ray& ray, HitPayload& payload) const override;
-        int get_material_index() const override { return m_material_index; }
     
     private:
         glm::vec3 m_position;
         float m_radius;
-        int m_material_index;
+        std::shared_ptr<Material> m_material;
 
 };
 
 
-Sphere::Sphere(const glm::vec3& position, float radius, int material_index)
-: m_position(position), m_radius(radius), m_material_index(material_index) {
+Sphere::Sphere(const glm::vec3& position, float radius, const std::shared_ptr<Material>& material)
+: m_position(position), m_radius(radius), m_material(material) {
 }
 
 
@@ -43,6 +42,7 @@ bool Sphere::hit(const Ray& ray, HitPayload& payload) const {
         payload.hit_distance = t1;
         payload.world_position = ray.origin + ray.direction * t1;
         payload.world_normal = glm::normalize(payload.world_position - m_position);
+        payload.material = m_material;
         return true;
     }
 

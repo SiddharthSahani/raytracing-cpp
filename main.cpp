@@ -1,6 +1,7 @@
 
 #include "src/renderer.h"
 #include "src/geometries/all_geometries.h"
+#include "src/material.h"
 #ifndef RT_NO_RAYLIB
 #include <raylib.h>
 #endif
@@ -8,48 +9,38 @@
 
 rt::Scene create_test_scene_1() {
     rt::Scene scene;
+    
     // creating materials
-    {
-        rt::Material& material = scene.materials.emplace_back();
-        material.albedo = {1.0, 0.0, 1.0};
-    }
-    {
-        rt::Material& material = scene.materials.emplace_back();
-        material.albedo = {0.2, 0.3, 1.0};
-    }
-    {
-        rt::Material& material = scene.materials.emplace_back();
-        material.albedo = {0.8, 0.5, 0.2};
-    }
-    {
-        rt::Material& material = scene.materials.emplace_back();
-        material.albedo = {0.1, 1.0, 0.1};
-    }
+    auto mat_1 = std::make_shared<rt::Material>();
+    mat_1->albedo = {1.0, 0.0, 1.0};
+    auto mat_2 = std::make_shared<rt::Material>();
+    mat_2->albedo = {0.2, 0.3, 1.0};
+    auto mat_3 = std::make_shared<rt::Material>();
+    mat_3->albedo = {0.8, 0.5, 0.2};
+    auto mat_4 = std::make_shared<rt::Material>();
+    mat_4->albedo = {0.1, 1.0, 0.1};
+    
     // creating objects
     {
         glm::vec3 position = {0.0, 0.0, 0.0};
         float radius = 1.0;
-        int material_index = 0;
-        scene.objects.emplace_back(new rt::Sphere(position, radius, material_index));
+        scene.objects.emplace_back(new rt::Sphere(position, radius, mat_1));
     }
     {
         glm::vec3 position = {0.0, -101.0, 0.0};
         float radius = 100.0;
-        int material_index = 1;
-        scene.objects.emplace_back(new rt::Sphere(position, radius, material_index));
+        scene.objects.emplace_back(new rt::Sphere(position, radius, mat_2));
     }
     {
         glm::vec3 position = {2.0, 0.0, 0.0};
         float radius = 1.0;
-        int material_index = 2;
-        scene.objects.emplace_back(new rt::Sphere(position, radius, material_index));
+        scene.objects.emplace_back(new rt::Sphere(position, radius, mat_3));
     }
     {
         glm::vec3 v0 = {-1.0, -1, -1};
         glm::vec3 v1 = {-1.0,  1, -1};
         glm::vec3 v2 = {-1.5,  0,  2};
-        int material_index = 3;
-        scene.objects.emplace_back(new rt::Triangle(v0, v1, v2, material_index));
+        scene.objects.emplace_back(new rt::Triangle(v0, v1, v2, mat_4));
     }
     
     scene.sky_color = {230, 230, 250};
@@ -61,30 +52,23 @@ rt::Scene create_test_scene_1() {
 rt::Scene create_test_scene_2() {
     rt::Scene scene;
     // creating materials
-    {
-        rt::Material& material = scene.materials.emplace_back();
-        material.albedo = {0.2, 0.6, 1.0};
-    }
-    {
-        rt::Material& material = scene.materials.emplace_back();
-        material.albedo = {0.2, 0.6, 0.0};
-    }
-    {
-        rt::Material& material = scene.materials.emplace_back();
-        material.albedo = {1, 0, 0};
-    }
+    auto mat_1 = std::make_shared<rt::Material>();
+    mat_1->albedo = {0.2, 0.6, 1.0};
+    auto mat_2 = std::make_shared<rt::Material>();
+    mat_2->albedo = {0.2, 0.6, 0.0};
+    auto mat_3 = std::make_shared<rt::Material>();
+    mat_3->albedo = {1, 0, 0};
+    
     // creating objects
     {
         glm::vec3 position = {0.0, 0.0, 0.0};
         float radius = 1.0;
-        int material_index = 0;
-        scene.objects.emplace_back(new rt::Sphere(position, radius, material_index));
+        scene.objects.emplace_back(new rt::Sphere(position, radius, mat_1));
     }
     {
         glm::vec3 position = {0.0, -101.0, 0.0};
         float radius = 100.0;
-        int material_index = 1;
-        scene.objects.emplace_back(new rt::Sphere(position, radius, material_index));
+        scene.objects.emplace_back(new rt::Sphere(position, radius, mat_2));
     }
     {
         const float size = 2;
@@ -92,9 +76,8 @@ rt::Scene create_test_scene_2() {
 		glm::vec3 v1 = {-size, -1, -size};
 		glm::vec3 v2 = { size, -0.5, -size};
 		glm::vec3 v3 = { size, -0.5,  size};
-        int material_index = 2;
-        scene.objects.emplace_back(new rt::Triangle(v0, v1, v2, material_index));
-        scene.objects.emplace_back(new rt::Triangle(v2, v3, v0, material_index));
+        scene.objects.emplace_back(new rt::Triangle(v0, v1, v2, mat_3));
+        scene.objects.emplace_back(new rt::Triangle(v2, v3, v0, mat_3));
     }
     
     scene.sky_color = {104, 184, 235};
@@ -175,7 +158,6 @@ int main() {
             DrawText(TextFormat("  Renderer size : %d x %d", image_width, image_height), 10, window_height-100, 17, RED);
             DrawText(TextFormat("  Scaling factor : %f", scale), 10, window_height-80, 17, RED);
             DrawText(TextFormat("  Number of objects : %d", test_scene.objects.size()), 10, window_height-60, 17, RED);
-            DrawText(TextFormat("  Number of materials : %d", test_scene.materials.size()), 10, window_height-40, 17, RED);
         }
 
         DrawFPS(10, 10);

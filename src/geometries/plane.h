@@ -10,20 +10,19 @@ namespace rt {
 class Plane : public Object {
 
     public:
-        Plane(const glm::vec3& normal, const glm::vec3& point, int material_index);
+        Plane(const glm::vec3& normal, const glm::vec3& point, const std::shared_ptr<Material>& material);
         bool hit(const Ray& ray, HitPayload& payload) const override;
-        int get_material_index() const override { return m_material_index; }
     
     private:
         glm::vec3 m_normal;
         glm::vec3 m_point; // a point in the plane
-        int m_material_index;
+        std::shared_ptr<Material> m_material;
 
 };
 
 
-Plane::Plane(const glm::vec3& normal, const glm::vec3& point, int material_index)
-: m_normal(normal), m_point(point), m_material_index(material_index) {
+Plane::Plane(const glm::vec3& normal, const glm::vec3& point, const std::shared_ptr<Material>& material)
+: m_normal(normal), m_point(point), m_material(material) {
 }
 
 
@@ -36,6 +35,7 @@ bool Plane::hit(const Ray& ray, HitPayload& payload) const {
             payload.world_position = ray.origin + ray.direction * hit_distance;
             // changing the normal's direction if it goes into the plane
             payload.world_normal = glm::dot(ray.direction, m_normal) > 0.0f ? -m_normal : m_normal;
+            payload.material = m_material;
             return true;
         }
     }

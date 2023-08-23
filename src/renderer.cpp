@@ -1,5 +1,6 @@
 
 #include "src/renderer.h"
+#include "src/material.h"
 #include "src/utils.h"
 #ifdef RT_NO_RAYLIB
 #define STB_IMAGE_WRITE_IMPLEMENTATION
@@ -143,10 +144,9 @@ glm::vec3 Renderer::per_pixel(uint32_t x, uint32_t y) {
             break;
         }
 
-        const auto& object = m_scene.objects[payload.object_index];
-        const Material& material = m_scene.materials[object->get_material_index()];
+        const auto& material = payload.material;
 
-        contribution *= material.albedo;
+        contribution *= material->albedo;
 
         ray.origin = payload.world_position + payload.world_normal * 0.0001f; // small bias so the ray doesnt start exactly at the surface
         ray.direction = glm::normalize(payload.world_normal + utils::random_vec3_in_unit_sphere(rng_seed)); // new random direction
@@ -162,9 +162,7 @@ HitPayload Renderer::trace_ray(const Ray& ray) {
 
     for (uint32_t i = 0; i < m_scene.objects.size(); i++) {
         const auto& object = m_scene.objects[i];
-        if (object->hit(ray, payload)) {
-            payload.object_index = i;
-        }
+        object->hit(ray, payload);
     }
 
     return payload;
