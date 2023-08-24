@@ -146,12 +146,12 @@ glm::vec3 Renderer::per_pixel(uint32_t x, uint32_t y) {
 
         const auto& material = payload.material;
 
-        glm::vec3 albedo;
-        if (!material->scatter(ray, payload, albedo, ray.direction)) {
+        glm::vec3 attenuation;
+        if (!material->scatter(attenuation, payload.world_normal, ray.direction)) {
             break;
         }
 
-        contribution *= albedo;
+        contribution *= attenuation;
 
         ray.origin = payload.world_position + payload.world_normal * 0.0001f; // small bias so the ray doesnt start exactly at the surface
     }

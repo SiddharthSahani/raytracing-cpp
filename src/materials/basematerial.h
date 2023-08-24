@@ -1,7 +1,6 @@
 
 #pragma once
 
-#include "src/ray.h"
 #include "src/hit_payload.h"
 
 
@@ -9,8 +8,8 @@ namespace rt {
 
 class Material {
     public:
-        virtual bool scatter(
-            const Ray& r_in, const HitPayload& payload, glm::vec3& attenuation, glm::vec3& new_ray_direction) const = 0;
+        // returns if the ray should bounce more or not
+        virtual bool scatter(glm::vec3& attenuation, const glm::vec3& normal, glm::vec3& new_ray_direction) const = 0;
 };
 
 }
