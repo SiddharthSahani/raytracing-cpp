@@ -10,7 +10,7 @@ namespace rt {
 class Material {
     public:
         virtual bool scatter(
-            const Ray& r_in, const HitPayload& payload, glm::vec3& attenuation, Ray& scattered) const = 0;
+            const Ray& r_in, const HitPayload& payload, glm::vec3& attenuation, glm::vec3& new_ray_direction) const = 0;
 };
 
 }

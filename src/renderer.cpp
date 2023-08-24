@@ -1,6 +1,6 @@
 
 #include "src/renderer.h"
-#include "src/material.h"
+#include "src/materials/basematerial.h"
 #include "src/utils.h"
 #ifdef RT_NO_RAYLIB
 #define STB_IMAGE_WRITE_IMPLEMENTATION
@@ -146,10 +146,14 @@ glm::vec3 Renderer::per_pixel(uint32_t x, uint32_t y) {
 
         const auto& material = payload.material;
 
-        contribution *= material->albedo;
+        glm::vec3 albedo;
+        if (!material->scatter(ray, payload, albedo, ray.direction)) {
+            break;
+        }
+
+        contribution *= albedo;
 
         ray.origin = payload.world_position + payload.world_normal * 0.0001f; // small bias so the ray doesnt start exactly at the surface
-        ray.direction = glm::normalize(payload.world_normal + utils::random_vec3_in_unit_sphere()); // new random direction
     }
 
     return light;
