@@ -6,6 +6,9 @@
 
 namespace utils {
 
+inline uint32_t rng_seed;
+
+
 uint32_t convert_to_rgba(const glm::vec3& color) {
     // color is from 0 to 1
     uint8_t r = color.r * 255;
@@ -25,16 +28,16 @@ uint32_t pcg_hash(uint32_t input) {
 }
 
 
-float random_float(uint32_t& seed) {
-    seed = pcg_hash(seed);
-    return (float) seed / UINT32_MAX;
+float random_float() {
+    rng_seed = pcg_hash(rng_seed);
+    return (float) rng_seed / UINT32_MAX;
 }
 
 
-glm::vec3 random_vec3_in_unit_sphere(uint32_t& seed) {
-    float x = random_float(seed);
-    float y = random_float(seed);
-    float z = random_float(seed);
+glm::vec3 random_vec3_in_unit_sphere() {
+    float x = random_float();
+    float y = random_float();
+    float z = random_float();
     glm::vec3 vec = {x, y, z};
     return glm::normalize(vec * 2.0f - 1.0f);
 }

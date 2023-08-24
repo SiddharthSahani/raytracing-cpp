@@ -130,12 +130,12 @@ glm::vec3 Renderer::per_pixel(uint32_t x, uint32_t y) {
     glm::vec3 light = {0, 0, 0};
     glm::vec3 contribution = {1, 1, 1};
 
-    uint32_t rng_seed = x + y*m_size.x;
-    rng_seed += m_frame_index * 32421;
+    utils::rng_seed = x + y*m_size.x;
+    utils::rng_seed += m_frame_index * 32421;
 
     int bounces = 5;
     for (int i = 0; i < bounces; i++) {
-        rng_seed += i * i * i;
+        utils::rng_seed += i * i * i;
 
         HitPayload payload = trace_ray(ray);
 
@@ -149,7 +149,7 @@ glm::vec3 Renderer::per_pixel(uint32_t x, uint32_t y) {
         contribution *= material->albedo;
 
         ray.origin = payload.world_position + payload.world_normal * 0.0001f; // small bias so the ray doesnt start exactly at the surface
-        ray.direction = glm::normalize(payload.world_normal + utils::random_vec3_in_unit_sphere(rng_seed)); // new random direction
+        ray.direction = glm::normalize(payload.world_normal + utils::random_vec3_in_unit_sphere()); // new random direction
     }
 
     return light;
