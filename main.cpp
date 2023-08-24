@@ -1,7 +1,7 @@
 
 #include "src/renderer.h"
 #include "src/geometries/all_geometries.h"
-#include "src/materials/lambertian.h"
+#include "src/materials/all_materials.h"
 #ifndef RT_NO_RAYLIB
 #include <raylib.h>
 #endif
@@ -14,7 +14,7 @@ rt::Scene create_test_scene_1() {
     auto mat_1 = std::make_shared<rt::Lambertian>(glm::vec3(1.0, 0.0, 1.0));
     auto mat_2 = std::make_shared<rt::Lambertian>(glm::vec3(0.2, 0.3, 1.0));
     auto mat_3 = std::make_shared<rt::Lambertian>(glm::vec3(0.8, 0.5, 0.2));
-    auto mat_4 = std::make_shared<rt::Lambertian>(glm::vec3(0.1, 1.0, 0.1));
+    auto mat_4 = std::make_shared<rt::Metal>(glm::vec3(0.8, 0.8, 0.8));
     
     // creating objects
     {
@@ -49,9 +49,9 @@ rt::Scene create_test_scene_2() {
     rt::Scene scene;
 
     // creating materials
-    auto mat_1 = std::make_shared<rt::Lambertian>(glm::vec3({0.2, 0.6, 1.0}));
-    auto mat_2 = std::make_shared<rt::Lambertian>(glm::vec3({0.2, 0.6, 0.0}));
-    auto mat_3 = std::make_shared<rt::Lambertian>(glm::vec3({1.0, 0.0, 0.0}));
+    auto mat_1 = std::make_shared<rt::Lambertian>(glm::vec3(0.2, 0.6, 1.0));
+    auto mat_2 = std::make_shared<rt::Lambertian>(glm::vec3(0.2, 0.6, 0.0));
+    auto mat_3 = std::make_shared<rt::Metal>(glm::vec3(0.7, 0.7, 0.7));
     
     // creating objects
     {
