@@ -147,7 +147,7 @@ glm::vec3 Renderer::per_pixel(uint32_t x, uint32_t y) {
         const auto& material = payload.material;
 
         glm::vec3 attenuation;
-        if (!material->scatter(attenuation, payload.world_normal, ray.direction)) {
+        if (!material->scatter(attenuation, ray.direction, payload.world_normal, ray.direction)) {
             break;
         }
 
