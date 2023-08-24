@@ -19,7 +19,7 @@ This project was inspired by
 
 2. From the project directory just run `make`
     ```cmd
-    > make STANDALONE=n
+    > make
     ```
 
 3. That's it
@@ -33,7 +33,7 @@ This project was inspired by
 ---
 #### Compiling without raylib
 - Will output an image
-- In terminal, instead of `STANDALONE=n` do
+- In terminal, add `STANDALONE=y` as arguments
     ```cmd
     > make STANDALONE=y
     ```
