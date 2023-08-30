@@ -2,6 +2,7 @@
 #include "src/renderer.h"
 #include "src/geometries/all_geometries.h"
 #include "src/materials/all_materials.h"
+#include "src/model.h"
 #ifndef RT_NO_RAYLIB
 #include <raylib.h>
 #endif
@@ -65,13 +66,19 @@ rt::Scene create_test_scene_2() {
         scene.objects.emplace_back(new rt::Sphere(position, radius, mat_2));
     }
     {
-        const float size = 2;
-		glm::vec3 v0 = {-size, -1,  size};
-		glm::vec3 v1 = {-size, -1, -size};
-		glm::vec3 v2 = { size, -0.5, -size};
-		glm::vec3 v3 = { size, -0.5,  size};
-        scene.objects.emplace_back(new rt::Triangle(v0, v1, v2, mat_3));
-        scene.objects.emplace_back(new rt::Triangle(v2, v3, v0, mat_3));
+		glm::vec3 v0 = {-1,  0,   1};
+		glm::vec3 v1 = {-1,  0,  -1};
+		glm::vec3 v2 = { 1, 0.5, -1};
+		glm::vec3 v3 = { 1, 0.5,  1};
+
+        rt::Model* model = (rt::Model*) scene.objects.emplace_back(new rt::Model(
+            {
+                rt::Triangle(v0, v1, v2, mat_3),
+                rt::Triangle(v2, v3, v0, mat_3),
+            }
+        )).get();
+
+        model->apply_transform({0, -1, 0}, {0, 0, 0}, {2, 1, 2});
     }
     
     scene.sky_color = {104, 184, 235};

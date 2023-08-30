@@ -16,6 +16,8 @@ class Triangle : public Object {
         glm::vec3 m_v0, m_v1, m_v2; // vertices of the triangle
         std::shared_ptr<Material> m_material;
 
+    friend class Model;
+
 };
 
 
