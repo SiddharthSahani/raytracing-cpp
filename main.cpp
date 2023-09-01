@@ -15,7 +15,7 @@ rt::Scene create_test_scene_1() {
     auto mat_1 = std::make_shared<rt::Lambertian>(glm::vec3(1.0, 0.0, 1.0));
     auto mat_2 = std::make_shared<rt::Lambertian>(glm::vec3(0.2, 0.3, 1.0));
     auto mat_3 = std::make_shared<rt::Lambertian>(glm::vec3(0.8, 0.5, 0.2));
-    auto mat_4 = std::make_shared<rt::Metal>(glm::vec3(0.8, 0.8, 0.8));
+    auto mat_4 = std::make_shared<rt::Metal>(glm::vec3(0.8, 0.8, 0.8), 0.1f);
     
     // creating objects
     {
@@ -52,7 +52,7 @@ rt::Scene create_test_scene_2() {
     // creating materials
     auto mat_1 = std::make_shared<rt::Lambertian>(glm::vec3(0.2, 0.6, 1.0));
     auto mat_2 = std::make_shared<rt::Lambertian>(glm::vec3(0.2, 0.6, 0.0));
-    auto mat_3 = std::make_shared<rt::Metal>(glm::vec3(0.7, 0.7, 0.7));
+    auto mat_3 = std::make_shared<rt::Metal>(glm::vec3(0.7, 0.7, 0.7), 0.05f);
     
     // creating objects
     {
