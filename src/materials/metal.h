@@ -27,7 +27,8 @@ Metal::Metal(const glm::vec3& albedo, float fuzz)
 
 bool Metal::scatter(glm::vec3& attenuation, const glm::vec3& ray_direction, const glm::vec3& normal, glm::vec3& new_ray_direction) const {
     glm::vec3 random_vec3 = m_fuzz * utils::random_vec3_in_unit_sphere();
-    new_ray_direction = glm::reflect(ray_direction, glm::normalize(normal + random_vec3));
+    new_ray_direction = glm::reflect(ray_direction, normal);
+    new_ray_direction = glm::normalize(new_ray_direction + random_vec3);
     attenuation = m_albedo;
     return true;
 }
