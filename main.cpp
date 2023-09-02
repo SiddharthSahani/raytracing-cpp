@@ -99,8 +99,9 @@ int check_if_scene_changed() {
 
 
 int main() {
-    const int window_width = 1080;
+    const int window_width = 1280;
     const int window_height = 720;
+
     const float scale = 2.0f;
     const int image_width = window_width / scale;
     const int image_height = window_height / scale;
@@ -161,7 +162,8 @@ int main() {
             DrawText(TextFormat("  Number of objects : %d", test_scene.objects.size()), 10, window_height-60, 17, RED);
         }
 
-        DrawFPS(10, 10);
+        DrawText(TextFormat("Frame time: %f", GetFrameTime()), 10, 10, 17, GREEN);
+        DrawText(TextFormat("FPS: %f", 1/GetFrameTime()), 10, 30, 17, GREEN);
         EndDrawing();
     }
 
