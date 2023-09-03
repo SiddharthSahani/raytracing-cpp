@@ -152,6 +152,7 @@ glm::vec3 Renderer::per_pixel(uint32_t x, uint32_t y) {
         }
 
         contribution *= attenuation;
+        light += material->emitted();
 
         ray.origin = payload.world_position + payload.world_normal * 0.0001f; // small bias so the ray doesnt start exactly at the surface
     }

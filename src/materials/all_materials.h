@@ -5,3 +5,4 @@
 
 #include "src/materials/lambertian.h"
 #include "src/materials/metal.h"
+#include "src/materials/emissive.h"
