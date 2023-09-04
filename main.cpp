@@ -15,7 +15,7 @@ rt::Scene create_test_scene_1() {
     auto mat_1 = std::make_shared<rt::Lambertian>(glm::vec3(1.0, 0.0, 1.0));
     auto mat_2 = std::make_shared<rt::Lambertian>(glm::vec3(0.2, 0.3, 1.0));
     auto mat_3 = std::make_shared<rt::Lambertian>(glm::vec3(0.8, 0.5, 0.2));
-    auto mat_4 = std::make_shared<rt::Metal>(glm::vec3(0.8, 0.8, 0.8), 0.1f);
+    auto mat_4 = std::make_shared<rt::Metal>(glm::vec3(0.8, 0.8, 0.8), 0.0f);
     
     // creating objects
     {
@@ -66,10 +66,10 @@ rt::Scene create_test_scene_2() {
         scene.objects.emplace_back(new rt::Sphere(position, radius, mat_2));
     }
     {
-		glm::vec3 v0 = {-1,  0,   1};
-		glm::vec3 v1 = {-1,  0,  -1};
-		glm::vec3 v2 = { 1, 0.5, -1};
-		glm::vec3 v3 = { 1, 0.5,  1};
+        glm::vec3 v0 = {-1,  0,   1};
+        glm::vec3 v1 = {-1,  0,  -1};
+        glm::vec3 v2 = { 1, 0.5, -1};
+        glm::vec3 v3 = { 1, 0.5,  1};
 
         rt::Model* model = (rt::Model*) scene.objects.emplace_back(new rt::Model(
             {
@@ -87,11 +87,52 @@ rt::Scene create_test_scene_2() {
 }
 
 
+rt::Scene create_test_scene_3() {
+    rt::Scene scene;
+
+    // creating materials
+    auto mat_1 = std::make_shared<rt::Lambertian>(glm::vec3(1.0, 0.0, 1.0));
+    auto mat_2 = std::make_shared<rt::Lambertian>(glm::vec3(0.2, 0.3, 1.0));
+    auto mat_3 = std::make_shared<rt::Emissive>(glm::vec3(0.8, 0.5, 0.2), 20.0);
+    auto mat_4 = std::make_shared<rt::Metal>(glm::vec3(0.8, 0.8, 0.8), 0.0);
+
+    // creating objects
+    {
+        glm::vec3 position = { 0.5f, 0.0f, 0.0f };
+        float radius = 1.0f;
+        scene.objects.emplace_back(new rt::Sphere(position, radius, mat_1));
+    }
+    {
+        glm::vec3 position = {0.0f, -101.0f, 0.0f};
+        float radius = 100.0f;
+        scene.objects.emplace_back(new rt::Sphere(position, radius, mat_2));
+    }
+    {
+        glm::vec3 position = {32.0f, 4.0f, -32.0f};
+        float radius = 20.0f;
+        scene.objects.emplace_back(new rt::Sphere(position, radius, mat_3));
+    }
+    {
+        glm::vec3 v0 = { 0.0f,  2.0f, -3.0f};
+        glm::vec3 v1 = {-2.0f,  2.0f, -2.0f};
+        glm::vec3 v2 = { 0.0f, -1.0f, -3.0f};
+        glm::vec3 v3 = {-2.0f, -1.0f, -2.0f};
+        scene.objects.emplace_back(new rt::Triangle(v0, v1, v2, mat_4));
+        scene.objects.emplace_back(new rt::Triangle(v1, v2, v3, mat_4));
+    }
+
+    scene.sky_color = {70, 70, 70};
+    scene.sky_color /= 255.0f;
+    return scene;
+}
+
+
 #ifndef RT_NO_RAYLIB
 int check_if_scene_changed() {
     if (IsKeyDown(KEY_C)) {
         if (IsKeyPressed(KEY_ONE))   { return 0; }
         if (IsKeyPressed(KEY_TWO))   { return 1; }
+        if (IsKeyPressed(KEY_THREE)) { return 2; }
     }
     return -1;
 }
@@ -116,6 +157,7 @@ int main() {
     rt::Scene test_scenes[] = {
         create_test_scene_1(),
         create_test_scene_2(),
+        create_test_scene_3(),
     };
     int num_of_test_scenes = sizeof(test_scenes) / sizeof(rt::Scene);
 
