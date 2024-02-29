@@ -5,7 +5,7 @@ INCLUDES = -I . -I external/ -I external/raylib/include
 SRC_FILES = $(wildcard src/*.cpp)
 OBJ_FILES = $(SRC_FILES:.cpp=.o)
 
-TARGET = main.exe
+TARGET = raytracing_cpp.exe
 
 
 ifeq ($(STANDALONE), y)
