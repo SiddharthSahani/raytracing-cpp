@@ -51,7 +51,7 @@ void Renderer::update() {
     for (uint32_t i = 0; i < frame_count; i++) {
 #endif
 
-    #pragma omp parallel for
+    #pragma omp parallel for num_threads(8)
     for (uint32_t y = 0; y < height; y++) {
         for (uint32_t x = 0; x < width; x++) {
             glm::vec3 color = per_pixel(x, y);
